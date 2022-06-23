@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -14,14 +16,14 @@ class listeDocument extends StatefulWidget {
 class _listeDocumentState extends State<listeDocument> {
   int? documentId;
   List? documents = [];
+  Timer? t;
   @override
   void initState() {
     super.initState();
-    fetchDocuments();
+    t = new Timer.periodic(timeDelay, (t) => fetchDocuments());
   }
 
   String getDocType(int number) {
-    print("Hedha type doc");
     if (number == 1) {
       return "Bon de commande";
     } else if (number == 2) {
@@ -48,6 +50,12 @@ class _listeDocumentState extends State<listeDocument> {
     } else {
       throw Exception('Error!');
     }
+  }
+
+  @override
+  void dispose() {
+    t?.cancel();
+    super.dispose();
   }
 
   @override
@@ -131,7 +139,14 @@ class _listeDocumentState extends State<listeDocument> {
                             DataCell(
                               Center(
                                   child: Text(
-                                getDocType(documents![i]['type']),
+                                (() {
+                                  if (documents![i]['type'] == 1) {
+                                    return "Bon de commande";
+                                  } else if (documents![i]['type'] == 2) {
+                                    return "Bon de retour";
+                                  }
+                                  return "Devis commercial";
+                                })(),
                                 style: TextStyle(color: Colors.white),
                               )),
                             ),

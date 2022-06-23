@@ -3,6 +3,7 @@ import 'package:mobilepfe/chart1.dart';
 import 'package:mobilepfe/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobilepfe/listedesdocument.dart';
+import 'package:mobilepfe/listedesfournisseurs.dart';
 import 'package:mobilepfe/listeproduits.dart';
 import 'package:mobilepfe/main.dart';
 import 'package:mobilepfe/recapMonetaire.dart';
@@ -70,10 +71,14 @@ class _SideMenuState extends State<SideMenu> {
             DrawerListTile(
               title: "Fournisseurs",
               svgSrc: "assets/icons/menu_tran.svg",
-              subTitle1: 'Ajouter Un Fournisseur',
-              subTitle2: 'Liste Des Fournisseurs',
-              press1: () {},
-              press2: () {},
+              subTitle1: 'Liste Des Fournisseurs',
+              press1: () {
+                Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                    builder: (BuildContext context) => MyHomePage(
+                          title: "Gestionnaire Mobile",
+                          welcomeScreen: [listeFournisseur()],
+                        )));
+              },
             ),
             DrawerListTile(
               title: "Produits",

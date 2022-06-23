@@ -5,24 +5,24 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'constant.dart';
 
-class listeProduit extends StatefulWidget {
+class listeFournisseur extends StatefulWidget {
   @override
-  State<listeProduit> createState() => listeProduitState();
+  State<listeFournisseur> createState() => listeFournisseurState();
 }
 
-class listeProduitState extends State<listeProduit> {
+class listeFournisseurState extends State<listeFournisseur> {
   int? produitId;
-  List? produits = [];
+  List? fournisseurs = [];
   Timer? t;
   @override
   void initState() {
     super.initState();
-    t = new Timer.periodic(timeDelay, (t) => fetchProduits());
+    t = new Timer.periodic(timeDelay, (t) => fetchFournisseurs());
   }
 
-  fetchProduits() async {
+  fetchFournisseurs() async {
     final response = await http.get(
-      Uri.parse('http://127.0.0.1:8000/api/produit'),
+      Uri.parse('http://127.0.0.1:8000/api/fournisseur'),
       headers: <String, String>{
         'Cache-Control': 'no-cache',
       },
@@ -31,7 +31,7 @@ class listeProduitState extends State<listeProduit> {
     if (response.statusCode == 200) {
       var items = jsonDecode(response.body);
       setState(() {
-        produits = items;
+        fournisseurs = items;
       });
     } else {
       throw Exception('Error!');
@@ -66,7 +66,7 @@ class listeProduitState extends State<listeProduit> {
                     child: SizedBox(
                   child: Center(
                     child: Text(
-                      'La Liste des produits',
+                      'La Liste des fournisseurs',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -85,7 +85,7 @@ class listeProduitState extends State<listeProduit> {
                     columns: const <DataColumn>[
                       DataColumn(
                           label: Expanded(
-                        child: Text("Référence Produit",
+                        child: Text("Raison sociale",
                             maxLines: 5,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -94,7 +94,7 @@ class listeProduitState extends State<listeProduit> {
                       )),
                       DataColumn(
                           label: Expanded(
-                        child: Text("Nom Produit",
+                        child: Text("Téléphone",
                             maxLines: 5,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -103,7 +103,7 @@ class listeProduitState extends State<listeProduit> {
                       )),
                       DataColumn(
                           label: Expanded(
-                        child: Text("Stock",
+                        child: Text("Email",
                             maxLines: 5,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -112,7 +112,7 @@ class listeProduitState extends State<listeProduit> {
                       )),
                       DataColumn(
                           label: Expanded(
-                        child: Text("Prix Achat",
+                        child: Text("Matricule fiscale",
                             maxLines: 5,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -121,7 +121,7 @@ class listeProduitState extends State<listeProduit> {
                       )),
                       DataColumn(
                           label: Expanded(
-                        child: Text("Prix Vente",
+                        child: Text("Pays",
                             maxLines: 5,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -130,7 +130,7 @@ class listeProduitState extends State<listeProduit> {
                       )),
                       DataColumn(
                           label: Expanded(
-                        child: Text("TVA",
+                        child: Text("Ville",
                             maxLines: 5,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -139,33 +139,35 @@ class listeProduitState extends State<listeProduit> {
                       )),
                     ],
                     rows: <DataRow>[
-                      for (var i = 0; i < produits!.length; i++)
+                      for (var i = 0; i < fournisseurs!.length; i++)
                         DataRow(
                           cells: <DataCell>[
-                            DataCell(Text(produits![i]['refProd'].toString(),
+                            DataCell(Text(
+                                fournisseurs![i]['raisonSociale'].toString(),
                                 style: TextStyle(
                                   color: Colors.white,
                                 ))),
-                            DataCell(Text(produits![i]['nomProd'].toString(),
+                            DataCell(Text(fournisseurs![i]['tel'].toString(),
                                 style: TextStyle(
                                   color: Colors.white,
                                 ))),
-                            DataCell(Text(produits![i]['stock'].toString(),
+                            DataCell(Text(fournisseurs![i]['email'].toString(),
                                 style: TextStyle(
                                   color: Colors.white,
                                 ))),
-                            DataCell(Text(produits![i]['prixAchat'].toString(),
+                            DataCell(Text(fournisseurs![i]['mf'].toString(),
                                 style: TextStyle(
                                   color: Colors.white,
                                 ))),
-                            DataCell(Text(produits![i]['prixVente'].toString(),
+                            DataCell(Text(fournisseurs![i]['pays'].toString(),
                                 style: TextStyle(
                                   color: Colors.white,
                                 ))),
-                            DataCell(Text("${produits![i]['TVA'].toString()}%",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ))),
+                            DataCell(
+                                Text("${fournisseurs![i]['ville'].toString()}",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ))),
                           ],
                         )
                     ],
