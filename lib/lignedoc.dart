@@ -69,6 +69,13 @@ class _listeLigneDocumentState extends State<listeLigneDocument> {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
       )),
+      DataColumn(
+          label: Flexible(
+        child: Text("Total par ligne",
+            maxLines: 5,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+      )),
     ], rows: <DataRow>[
       for (var i = 0; i < ligneDocuments!.length; i++)
         if (ligneDocuments![i]['id_doc'] == widget.ligneDocumentId)
@@ -88,7 +95,15 @@ class _listeLigneDocumentState extends State<listeLigneDocument> {
                   style: TextStyle(color: Colors.white)),
             )),
             DataCell(Center(
-              child: Text(ligneDocuments![i]['prixProd'].toString(),
+              child: Text(ligneDocuments![i]['prixProd'].toString() + " DT",
+                  style: TextStyle(color: Colors.white)),
+            )),
+            DataCell(Center(
+              child: Text(
+                  (ligneDocuments![i]['qteProd'] *
+                              ligneDocuments![i]['prixProd'])
+                          .toString() +
+                      " DT",
                   style: TextStyle(color: Colors.white)),
             ))
           ])

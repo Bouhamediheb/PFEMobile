@@ -66,7 +66,7 @@ class listeFournisseurState extends State<listeFournisseur> {
                     child: SizedBox(
                   child: Center(
                     child: Text(
-                      'La Liste des fournisseurs',
+                      'La liste des fournisseurs',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,

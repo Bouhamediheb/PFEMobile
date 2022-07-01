@@ -22,8 +22,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.light(),
       debugShowCheckedModeBanner: false,
       home: MyHomePage(
-        title: 'Gestionnaire Mobile',
-        welcomeScreen: [RecapEtat(), LineChartSample1()],
+        title: 'Gestionnaire Mobile PFE',
+        welcomeScreen: [RecapEtat(), SizedBox(height: 20), LineChartSample1()],
       ),
     );
   }
@@ -33,7 +33,7 @@ class MyHomePage extends StatefulWidget {
   final String title;
   List<Widget> welcomeScreen = [RecapEtat(), LineChartSample1()];
 
-  MyHomePage({this.title = 'Demo', required this.welcomeScreen});
+  MyHomePage({this.title = 'PFE Mobile', required this.welcomeScreen});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();

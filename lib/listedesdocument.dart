@@ -143,9 +143,15 @@ class _listeDocumentState extends State<listeDocument> {
                                   if (documents![i]['type'] == 1) {
                                     return "Bon de commande";
                                   } else if (documents![i]['type'] == 2) {
+                                    return "Bon d'entrée";
+                                  } else if (documents![i]['type'] == 3) {
                                     return "Bon de retour";
+                                  } else if (documents![i]['type'] == 4) {
+                                    return "Facture";
+                                  } else if (documents![i]['type'] == 5) {
+                                    return "Ticket de caisse";
                                   }
-                                  return "Devis commercial";
+                                  return "";
                                 })(),
                                 style: TextStyle(color: Colors.white),
                               )),
@@ -174,23 +180,28 @@ class _listeDocumentState extends State<listeDocument> {
                                               child: SingleChildScrollView(
                                                 scrollDirection:
                                                     Axis.horizontal,
-                                                child: Column(
-                                                  children: [
-                                                    Text(
-                                                      "Contenu du document",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 22,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    Divider(
-                                                      thickness: 5,
-                                                      color: Colors.white,
-                                                    ),
-                                                    listeLigneDocument(
-                                                        documents![i]['id']),
-                                                  ],
+                                                child: SingleChildScrollView(
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  child: Column(
+                                                    children: [
+                                                      Text(
+                                                        "Contenu du document",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 22,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      Divider(
+                                                        thickness: 5,
+                                                        color: Colors.white,
+                                                      ),
+                                                      listeLigneDocument(
+                                                          documents![i]['id']),
+                                                    ],
+                                                  ),
                                                 ),
                                               )));
                                     },

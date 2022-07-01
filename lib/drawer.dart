@@ -38,7 +38,11 @@ class _SideMenuState extends State<SideMenu> {
                 Navigator.of(context).pushReplacement(new MaterialPageRoute(
                     builder: (BuildContext context) => MyHomePage(
                           title: "Gestionnaire Mobile",
-                          welcomeScreen: [RecapEtat(), LineChartSample1()],
+                          welcomeScreen: [
+                            RecapEtat(),
+                            SizedBox(height: 20),
+                            LineChartSample1()
+                          ],
                         )));
               },
               child: ListTile(
