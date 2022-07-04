@@ -66,7 +66,7 @@ class listeProduitState extends State<listeProduit> {
                     child: SizedBox(
                   child: Center(
                     child: Text(
-                      'La liste des produits',
+                      'Liste des produits & Stock',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,

@@ -169,14 +169,15 @@ class _LineChart extends StatelessWidget {
     const FlSpot(1, 1),
     const FlSpot(3, 1.5),
     const FlSpot(5, 1.4),
-    const FlSpot(7, 3.4),
+    const FlSpot(7, 2.4),
   ];
 
   List<FlSpot> F2 = [
     const FlSpot(1, 2),
     const FlSpot(3, 1),
     const FlSpot(5, 2),
-    const FlSpot(7, 4),
+    const FlSpot(7, 1),
+    
   ];
 
   FlBorderData get borderData => FlBorderData(
@@ -224,16 +225,16 @@ class _LineChart extends StatelessWidget {
       );
 
   List<FlSpot> F3 = [
-    const FlSpot(1, 4),
+    const FlSpot(1, 2),
     const FlSpot(3, 1.5),
     const FlSpot(5, 2),
-    const FlSpot(7, 1),
+    const FlSpot(2, 1),
   ];
 
   List<FlSpot> F4 = [
     const FlSpot(1, 2),
     const FlSpot(3, 1),
-    const FlSpot(5, 2.5),
+    const FlSpot(2, 2.5),
   ];
 
   LineChartBarData get lineChartBarData2_2 => LineChartBarData(

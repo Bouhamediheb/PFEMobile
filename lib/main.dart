@@ -19,11 +19,27 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light(),
+      theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       home: MyHomePage(
         title: 'Gestionnaire Mobile PFE',
-        welcomeScreen: [RecapEtat(), SizedBox(height: 20), LineChartSample1()],
+        welcomeScreen: [
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Vos actions ..",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          RecapEtat(),
+          SizedBox(height: 10),
+          Text(
+            "Evolution du chiffre d'affaires",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 20),
+          LineChartSample1()
+        ],
       ),
     );
   }
@@ -49,6 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for (var i = 0; i < widget.welcomeScreen.length; i++)
                   widget.welcomeScreen[i]

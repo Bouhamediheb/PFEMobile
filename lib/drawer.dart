@@ -7,6 +7,7 @@ import 'package:mobilepfe/listedesfournisseurs.dart';
 import 'package:mobilepfe/listeproduits.dart';
 import 'package:mobilepfe/main.dart';
 import 'package:mobilepfe/recapMonetaire.dart';
+import 'package:mobilepfe/userrights.dart';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({
@@ -39,7 +40,22 @@ class _SideMenuState extends State<SideMenu> {
                     builder: (BuildContext context) => MyHomePage(
                           title: "Gestionnaire Mobile",
                           welcomeScreen: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Vos actions ..",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             RecapEtat(),
+                            Text(
+                              "Evolution du chiffre d'affaires",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             SizedBox(height: 20),
                             LineChartSample1()
                           ],
@@ -87,7 +103,7 @@ class _SideMenuState extends State<SideMenu> {
             DrawerListTile(
               title: "Produits",
               svgSrc: "assets/icons/menu_doc.svg",
-              subTitle1: 'Liste des produits',
+              subTitle1: 'Liste des produits & Inventaire',
               press1: () {
                 Navigator.of(context).pushReplacement(new MaterialPageRoute(
                     builder: (BuildContext context) => MyHomePage(
@@ -102,7 +118,14 @@ class _SideMenuState extends State<SideMenu> {
               subTitle1: 'Gestion des droits des utilisateurs',
               subTitle2: 'Parametres du compte',
               subTitle3: 'Se Déconnecter',
-              press1: () {},
+              press1: () {
+                //Navigate to listeUtlisateurs
+                Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                    builder: (BuildContext context) => MyHomePage(
+                          title: "Gestionnaire Mobile",
+                          welcomeScreen: [listeUtlisateurs()],
+                        )));
+              },
               press2: () {},
               press3: () {},
             ),
