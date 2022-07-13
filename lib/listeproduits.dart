@@ -154,15 +154,15 @@ class listeProduitState extends State<listeProduit> {
                                 style: TextStyle(
                                   color: Colors.white,
                                 ))),
-                            DataCell(Text(produits![i]['prixAchat'].toString(),
+                            DataCell(Text(produits![i]['prixAchatHT'].toString(),
                                 style: TextStyle(
                                   color: Colors.white,
                                 ))),
-                            DataCell(Text(produits![i]['prixVente'].toString(),
+                            DataCell(Text(produits![i]['prixVenteHT'].toString(),
                                 style: TextStyle(
                                   color: Colors.white,
                                 ))),
-                            DataCell(Text("${produits![i]['TVA'].toString()}%",
+                            DataCell(Text("${produits![i]['tvaProd'].toString()}%",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ))),

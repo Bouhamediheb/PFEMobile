@@ -1,10 +1,13 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:mobilepfe/Login/screen/Login.dart';
 import 'package:mobilepfe/chart1.dart';
 import 'package:mobilepfe/constant.dart';
 import 'package:mobilepfe/drawer.dart';
 import 'package:mobilepfe/recapMonetaire.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,29 +21,16 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark(),
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(
-        title: 'Gestionnaire Mobile PFE',
-        welcomeScreen: [
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Vos actions ..",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          RecapEtat(),
-          SizedBox(height: 10),
-          Text(
-            "Evolution du chiffre d'affaires",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 20),
-          LineChartSample1()
-        ],
+      title: 'Gestionnaire',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: bgColor,
+        
+        canvasColor: secondaryColor,
       ),
+      home: CheckAuth(),
+      
     );
   }
 }
@@ -49,7 +39,7 @@ class MyHomePage extends StatefulWidget {
   final String title;
   List<Widget> welcomeScreen = [RecapEtat(), LineChartSample1()];
 
-  MyHomePage({this.title = 'PFE Mobile', required this.welcomeScreen});
+  MyHomePage({this.title = 'Gestionnaire mobile', required this.welcomeScreen});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -63,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: _buildAppBar(),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding:  EdgeInsets.all(12.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        drawer: const SideMenu());
+        drawer:  SideMenu());
   }
 
   AppBar _buildAppBar() {
@@ -88,5 +78,50 @@ class _MyHomePageState extends State<MyHomePage> {
         style: const TextStyle(color: Colors.white),
       ),
     );
+  }
+}
+
+class CheckAuth extends StatefulWidget {
+  const CheckAuth({Key? key}) : super(key: key);
+
+  @override
+  State<CheckAuth> createState() => _CheckAuthState();
+}
+
+class _CheckAuthState extends State<CheckAuth> {
+  bool isAuth = false;
+  Map<String, dynamic>? user;
+  @override
+  void initState() {
+    _checkIfLoggedIn();
+    super.initState();
+  }
+
+  void _checkIfLoggedIn() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('access_token');
+    setState(() {
+      user = json.decode(localStorage.getString('user') as String);
+    });
+    if (token != null) {
+      setState(() {
+        isAuth = true;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget? child;
+    if (isAuth == false) {
+      child = LoginPage();
+    } else {
+      if (user!['role'] == 3) {
+
+      } else {
+        child = MyHomePage(welcomeScreen: [RecapEtat(), LineChartSample1()]);
+      }
+    }
+    return Scaffold(body: child);
   }
 }

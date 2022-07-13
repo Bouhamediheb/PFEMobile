@@ -1,14 +1,15 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:mobilepfe/constant.dart';
 import 'package:mobilepfe/lignedoc.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+
 
 class listeDocument extends StatefulWidget {
+  int? typeDoc;
+  String? nomListeDoc;
+  listeDocument(this.typeDoc,this.nomListeDoc);
   @override
   State<listeDocument> createState() => _listeDocumentState();
 }
@@ -16,21 +17,27 @@ class listeDocument extends StatefulWidget {
 class _listeDocumentState extends State<listeDocument> {
   int? documentId;
   List? documents = [];
-  Timer? t;
+  String dropdownvalue = 'Tous les Documents';
   @override
   void initState() {
     super.initState();
-    t = new Timer.periodic(timeDelay, (t) => fetchDocuments());
+    fetchDocuments();
   }
 
   String getDocType(int number) {
     if (number == 1) {
       return "Bon de commande";
     } else if (number == 2) {
-      return "Bon de livraison";
+      return "Bon d'entrée";
     } else if (number == 3) {
       return "Bon de retour";
-    } else if (number == 4) {}
+    } else if (number == 4) {
+      return "Ticket";
+    } else if (number == 5) {
+      return "Facture";
+    } else if (number == 6) {
+      return 'Bon de sortie';
+    }
     return "Devis";
   }
 
@@ -53,185 +60,128 @@ class _listeDocumentState extends State<listeDocument> {
   }
 
   @override
-  void dispose() {
-    t?.cancel();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(2.0),
+      padding: const EdgeInsets.all(10.0),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Material(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          color: bgColor,
-          elevation: 2,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Column(children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.all(5),
+        child: SizedBox(
+          child: Column(children: <Widget>[
+             Padding(
+              padding: EdgeInsets.all(5),
+              child: Center(
+                  child: SizedBox(
+                height: 45,
                 child: Center(
-                    child: SizedBox(
-                  child: Center(
-                    child: Text(
-                      'La Liste des documents ',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
+                  child: Text(
+                    widget.nomListeDoc!,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                   ),
-                )),
-              ),
-              const Divider(
-                thickness: 3,
-              ),
-              SizedBox(
+                ),
+              )),
+            ),
+            const Divider(
+              thickness: 3,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: BouncingScrollPhysics(),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
+                                  physics: BouncingScrollPhysics(),
+
                   child: DataTable(
                     columns: const <DataColumn>[
                       DataColumn(
-                          label: Expanded(
-                        flex: 1,
+                          label: Flexible(
                         child: Text("Type du document",
-                            maxLines: 2,
+                            maxLines: 5,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       )),
                       DataColumn(
-                          label: Expanded(
-                        flex: 1,
+                          label: Flexible(
                         child: Text("Numéro du document",
-                            maxLines: 2,
+                            maxLines: 5,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       )),
                       DataColumn(
-                          label: Expanded(
+                          label: Flexible(
                         child: Text("Date du document",
                             maxLines: 5,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.white)),
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       )),
                       DataColumn(
-                          label: Expanded(
+                          label: Flexible(
                         child: Text("Montant total du document",
                             maxLines: 5,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.white)),
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       )),
+                      
                     ],
                     rows: <DataRow>[
                       for (var i = 0; i < documents!.length; i++)
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(
-                              Center(
-                                  child: Text(
-                                (() {
-                                  if (documents![i]['type'] == 1) {
-                                    return "Bon de commande";
-                                  } else if (documents![i]['type'] == 2) {
-                                    return "Bon d'entrée";
-                                  } else if (documents![i]['type'] == 3) {
-                                    return "Bon de retour";
-                                  } else if (documents![i]['type'] == 4) {
-                                    return "Facture";
-                                  } else if (documents![i]['type'] == 5) {
-                                    return "Ticket de caisse";
-                                  }
-                                  return "";
-                                })(),
-                                style: TextStyle(color: Colors.white),
-                              )),
-                            ),
-                            DataCell(InkWell(
-                                onTap: () {
-                                  showAnimatedDialog(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                          backgroundColor:
-                                              Color.fromARGB(255, 39, 45, 80),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          content: SizedBox(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.5,
-                                              child: SingleChildScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
+                        if (documents![i]['type'] == widget.typeDoc)
+                          DataRow(
+                            cells: <DataCell>[
+                              DataCell(
+                                Center(
+                                    child: Text(
+                                        getDocType(documents![i]['type']))),
+                              ),
+                              DataCell(InkWell(
+                                  onTap: () {
+                                    showAnimatedDialog(
+                                      context: context,
+                                      barrierDismissible: true,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                            backgroundColor: bgColor,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            content: SizedBox(
+                                                width: 800,
                                                 child: SingleChildScrollView(
-                                                  scrollDirection:
-                                                      Axis.vertical,
-                                                  child: Column(
-                                                    children: [
-                                                      Text(
-                                                        "Contenu du document",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 22,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                      Divider(
-                                                        thickness: 5,
-                                                        color: Colors.white,
-                                                      ),
-                                                      listeLigneDocument(
-                                                          documents![i]['id']),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )));
-                                    },
-                                    animationType:
-                                        DialogTransitionType.fadeScale,
-                                    curve: Curves.fastOutSlowIn,
-                                    duration: const Duration(seconds: 1),
-                                  );
-                                },
-                                child: Center(
-                                  child: Text(documents![i]['numDoc'],
-                                      style: TextStyle(color: Colors.white)),
-                                ))),
-                            DataCell(Center(
-                              child: Text(documents![i]['dateDoc'].toString(),
-                                  style: TextStyle(color: Colors.white)),
-                            )),
-                            DataCell(Center(
-                              child: Text(
-                                  documents![i]['totalDoc'].toString() + " DT",
-                                  style: TextStyle(color: Colors.white)),
-                            )),
-                          ],
-                        )
+                                                                  physics: BouncingScrollPhysics(),
+scrollDirection: Axis.horizontal,
+                                                  child: listeLigneDocument(
+                                                      documents![i]['id']),
+                                                )));
+                                      },
+                                      animationType:
+                                          DialogTransitionType.fadeScale,
+                                      curve: Curves.fastOutSlowIn,
+                                      duration: const Duration(seconds: 1),
+                                    );
+                                  },
+                                  child: Center(
+                                      child: Text(documents![i]['numDoc'])))),
+                              DataCell(Center(
+                                  child: Text(
+                                      documents![i]['dateDoc'].toString()))),
+                              DataCell(Center(
+                                  child: Text(
+                                      "${documents![i]['totalDoc'].toString()} DT"))),
+                              
+                            ],
+                          )
                     ],
                   ),
                 ),
               ),
-            ]),
-          ),
+            ),
+          ]),
         ),
       ),
     );
