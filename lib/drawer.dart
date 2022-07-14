@@ -92,14 +92,36 @@ void initState() {
             MaterialButton(
               padding: const EdgeInsets.all(0),
               onPressed: () {
-                Navigator.push(
+
+
+                
+
+                        
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
                       builder: (context) => MyHomePage(
                             title: "PFE Mobile",
-                            welcomeScreen: [RecapEtat(), LineChartSample1()],
+                            welcomeScreen: [SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Vos actions ..",
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      RecapEtat(),
+                      SizedBox(height: 10),
+                      Text(
+                        "Evolution du chiffre d'affaires",
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 20),
+                      LineChartSample1()],
                           )),
+                 (Route<dynamic> route) => false
                 );
+
+                
               },
               child: ListTile(
                   leading: SvgPicture.asset(
@@ -118,6 +140,19 @@ void initState() {
             MaterialButton(
               padding: const EdgeInsets.all(0),
               onPressed: () {
+
+                
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MyHomePage(
+                            title: "PFE Mobile",
+                            welcomeScreen: [EtatStockGlobal()],
+                          )),
+                 (Route<dynamic> route) => false
+                );
+                
+                /*
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -126,6 +161,7 @@ void initState() {
                             welcomeScreen: [EtatStockGlobal()],
                           )),
                 );
+                */
               },
               child: ListTile(
                   leading: SvgPicture.asset(
@@ -160,11 +196,17 @@ void initState() {
                     horizontalTitleGap: 0.0,
                     contentPadding: EdgeInsets.only(left: 30),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyHomePage(welcomeScreen:[listeDocument(1,'Liste des bon de commandes fournisseur ')])),
-                      );
+
+                      Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MyHomePage(
+                            title: "PFE Mobile",
+                            welcomeScreen: [listeDocument(1, 'Liste des bons de commandes fournisseur')],
+                          )),
+                 (Route<dynamic> route) => false
+                );
+
                     },
                   ),
                   ListTile(
@@ -179,11 +221,15 @@ void initState() {
                     horizontalTitleGap: 0.0,
                     contentPadding: EdgeInsets.only(left: 30),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyHomePage(welcomeScreen:[listeDocument(2,'Liste des bon d\'entrées')])),
-                      );
+                      Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MyHomePage(
+                            title: "PFE Mobile",
+                            welcomeScreen: [listeDocument(2, 'Liste des bons d/entrée ')],
+                          )),
+                 (Route<dynamic> route) => false
+                );
                     },
                   ),
                   ListTile(
@@ -198,11 +244,15 @@ void initState() {
                     horizontalTitleGap: 0.0,
                     contentPadding: EdgeInsets.only(left: 30),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyHomePage(welcomeScreen:[listeDocument(4,'Liste des bons de retours')])),
-                      );
+                      Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MyHomePage(
+                            title: "PFE Mobile",
+                            welcomeScreen: [listeDocument(4, 'Liste des bons de retour')],
+                          )),
+                 (Route<dynamic> route) => false
+                );
                     },
                   ),
                   ListTile(
@@ -217,11 +267,15 @@ void initState() {
                     horizontalTitleGap: 0.0,
                     contentPadding: EdgeInsets.only(left: 30),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyHomePage(welcomeScreen:[listeDocument(6,'Liste des bons de sorties')])),
-                      );
+                      Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MyHomePage(
+                            title: "PFE Mobile",
+                            welcomeScreen: [listeDocument(6, 'Liste des bons de sortie')],
+                          )),
+                 (Route<dynamic> route) => false
+                );
                     },
                   ),
                   ListTile(
@@ -236,10 +290,15 @@ void initState() {
                     horizontalTitleGap: 0.0,
                     contentPadding: EdgeInsets.only(left: 30),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => listeDocument(5,'Facture')),
-                      );
+                     Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MyHomePage(
+                            title: "PFE Mobile",
+                            welcomeScreen: [listeDocument(6, 'Liste des factures')],
+                          )),
+                 (Route<dynamic> route) => false
+                );
                     },
                   ),
                 ]),
@@ -250,6 +309,9 @@ void initState() {
                             subTitle2: 'Liste des produits',
 
               press1: () {
+
+
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(
